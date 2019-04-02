@@ -589,3 +589,107 @@ eruptions4 <- with(faithful,faithful[eruptions>4,])
 #now add in the points
 points(eruptions4, pch = 2, col = "red")
 
+#----------maths functions----------
+sqrt(x = 100)
+sqrt(100)
+
+log(x = 4, base = 2)
+log(x = exp(1), base = exp(1))
+
+#add values in a vector
+sum(c(1,2,3,4,5))
+
+#other stuff
+variables = c(1,3,5,8)
+
+mean(variables)
+
+median(variables)
+
+min(variables)
+
+max(variables)
+
+range(variables)
+
+#rounding
+ceiling(4.5)
+floor(4.5)
+
+#cumulatives, just continue adding and add the next term
+cumsum(c(1,2,3))
+cumprod(c(1,2,3))
+cummax(c(1,2,1,2,1,2))
+cummin(c(1,2,1,2,1,2))
+
+#generating random samples flipping coin 10 times and weigh the probability from
+#a sample of 0 to 10, take one value out and append to list. replace the value
+#removed, and repeat this process 10 times
+sample(0:1,10,replace=T)
+
+#----------pie charts----------
+
+#list percentages
+food <- c(15,30,15,40)
+
+#list labels
+labels <- c("pizza","ice cream","chendol","rabbit meat")
+
+#where to save image
+png(file = "food_preferences.png")
+
+#generate list of colors
+colors = rainbow(length(food))
+colors
+
+#create chart
+pie(food, labels = labels, main = "Food Preference", col = colors)
+
+#set the legend for the pie (location, labels, fill to set colors)
+legend("topright", labels, fill = colors)
+
+dev.off()
+
+#3d pie chart
+library(plotrix)
+
+#create the file
+png(file = "3D_food_preferences.png")
+
+#create chart
+pie3D(food, labels = labels, main = "Food Preference", start = pi/2, col = colors, explode = 0.1, labelcex = 0.5)
+
+#save the file
+dev.off()
+
+
+#----------bar charts-----------
+
+#create the file
+png(file = "bar_food_preferences.png")
+
+#plot the chart
+barplot(food, names.arg = labels, xlab = "food", ylab = "percentage", col = colors, main = "Food preferences")
+
+#save the chart
+dev.off()
+
+#----------regression analysis----------
+
+#open the file
+players <- read.table(file.choose(),
+                       header = T, sep = " ",
+                       na.strings = "`",
+                       stringsAsFactors = F)
+
+players
+
+#create the data file with the trait in question as well as other states
+playerInterestedData <- players[,c("RBI","AVG","HR","OBP","SLG","OPS")]
+
+#create the relationship model
+relationship <- lm(playerInterestedData$RBI ~ playerInterestedData$AVG + 
+                    playerInterestedData$HR +playerInterestedData$OBP + 
+                    playerInterestedData$SLG +playerInterestedData$OPS)
+
+relationship
